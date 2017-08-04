@@ -1,0 +1,9 @@
+*~
+**/*.pyc
+**/_ext
+**/build
+**/dist
+**/*.egg-info
+**/.eggs
+.clang_complete
+*.o
