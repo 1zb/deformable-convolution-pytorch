@@ -299,7 +299,8 @@ int deform_conv_backward_input_cuda(
 
   THCudaTensor_free(state, gradInput_n);
   THCudaTensor_free(state, gradOffset_n);
-  // THCudaTensor_free(state, offset_n);
+  THCudaTensor_free(state, input_n);
+  THCudaTensor_free(state, offset_n);
   THCudaTensor_free(state, gradOutput_n);
 
   if (batch == 0) {
