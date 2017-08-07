@@ -10,3 +10,6 @@ CC=g++ python build.py
 ```
 
 See `test.py` for example usage.
+
+### Notice
+Only `torch.cuda.FloatTensor` is supported.
