@@ -26,7 +26,7 @@ class ConvOffset2d(Module):
         self.num_deformable_groups = num_deformable_groups
 
         self.weight = nn.Parameter(
-            torch.Tensor(out_channels, in_channels, *kernel_size))
+            torch.Tensor(out_channels, in_channels, *self.kernel_size))
 
         self.reset_parameters()
 
