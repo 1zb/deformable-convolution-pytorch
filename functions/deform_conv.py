@@ -41,8 +41,12 @@ class ConvOffset2dFunction(Function):
         if not input.is_cuda:
             raise NotImplementedError
         else:
-            if not isinstance(input, torch.cuda.FloatTensor):
-                raise NotImplementedError
+            if isinstance(input, torch.autograd.Variable):
+                if not isinstance(input.data, torch.cuda.FloatTensor):
+                    raise NotImplementedError
+            else:
+                if not isinstance(input, torch.cuda.FloatTensor):
+                    raise NotImplementedError
             deform_conv.deform_conv_forward_cuda(
                 input, weight, offset, output, self.bufs_[0], self.bufs_[1],
                 weight.size(3), weight.size(2), self.stride[1], self.stride[0],
@@ -58,8 +62,12 @@ class ConvOffset2dFunction(Function):
         if not grad_output.is_cuda:
             raise NotImplementedError
         else:
-            if not isinstance(grad_output, torch.cuda.FloatTensor):
-                raise NotImplementedError
+            if isinstance(grad_output, torch.autograd.Variable):
+                if not isinstance(grad_output.data, torch.cuda.FloatTensor):
+                    raise NotImplementedError
+            else:
+                if not isinstance(grad_output, torch.cuda.FloatTensor):
+                    raise NotImplementedError
             if self.needs_input_grad[0] or self.needs_input_grad[1]:
                 grad_input = input.new(*input.size()).zero_()
                 grad_offset = offset.new(*offset.size()).zero_()
