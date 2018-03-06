@@ -45,8 +45,7 @@ class ConvOffset2dFunction(Function):
                 raise NotImplementedError
             deform_conv.deform_conv_forward_cuda(
                 input, weight, offset, output, self.bufs_[0], self.bufs_[1],
-                weight.size(3),
-                weight.size(2), self.stride[1], self.stride[0],
+                weight.size(3), weight.size(2), self.stride[1], self.stride[0],
                 self.padding[1], self.padding[0], self.dilation[1],
                 self.dilation[0], self.deformable_groups)
         return output
@@ -65,9 +64,8 @@ class ConvOffset2dFunction(Function):
                 grad_input = input.new(*input.size()).zero_()
                 grad_offset = offset.new(*offset.size()).zero_()
                 deform_conv.deform_conv_backward_input_cuda(
-                    input, offset, grad_output, grad_input, grad_offset,
-                    weight, self.bufs_[0],
-                    weight.size(3),
+                    input, offset, grad_output, grad_input,
+                    grad_offset, weight, self.bufs_[0], weight.size(3),
                     weight.size(2), self.stride[1], self.stride[0],
                     self.padding[1], self.padding[0], self.dilation[1],
                     self.dilation[0], self.deformable_groups)
@@ -75,9 +73,8 @@ class ConvOffset2dFunction(Function):
             if self.needs_input_grad[2]:
                 grad_weight = weight.new(*weight.size()).zero_()
                 deform_conv.deform_conv_backward_parameters_cuda(
-                    input, offset, grad_output, grad_weight, self.bufs_[0],
-                    self.bufs_[1],
-                    weight.size(3),
+                    input, offset, grad_output,
+                    grad_weight, self.bufs_[0], self.bufs_[1], weight.size(3),
                     weight.size(2), self.stride[1], self.stride[0],
                     self.padding[1], self.padding[0], self.dilation[1],
                     self.dilation[0], self.deformable_groups, 1)
